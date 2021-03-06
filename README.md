@@ -18,3 +18,10 @@ If you have any `improvements` or `ideas`, please let me know.
 
 Also feel free to report any bugs that may occur.
 
+## Building the project
+
+To build the project simply execute `make build` in the directory of the `makefile`.
+
+Make sure to also install the library `SFML` which is needed to build the project.
+
+To install `SFML` under Linux: `sudo apt-get install libsfml-dev`
