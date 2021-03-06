@@ -1,6 +1,6 @@
 Euler fluid simulation
 ===
-![Demo Gif](demo/euler-fluid-simulation.gif)
+![Demo Gif](demo/euler-fluid-simulation-resized.gif)
 
 ## Inspiration
 
