@@ -13,7 +13,6 @@ void Sim::Setup() {}
 
 void Sim::Run() {
 	this->Setup();
-	bool pressing = false;
 	sf::Vector2i previousMouse = sf::Mouse::getPosition(this->win);
 	sf::Vector2i currentMouse = sf::Mouse::getPosition(this->win);
 
@@ -25,9 +24,10 @@ void Sim::Run() {
 			}
 		}
 
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))			
+			this->container.AddDensity(currentMouse.y/SCALE, currentMouse.x/SCALE, 200);
+
 		currentMouse = sf::Mouse::getPosition(this->win);
-				
-		this->container.AddDensity(currentMouse.y/SCALE, currentMouse.x/SCALE, 150);
 
 		float amountX = currentMouse.x - previousMouse.x;
 		float amountY = currentMouse.y - previousMouse.y;
