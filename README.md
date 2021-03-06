@@ -18,6 +18,12 @@ If you have any `improvements` or `ideas`, please let me know.
 
 Also feel free to report any bugs that may occur.
 
+## How to use
+
+Pressing left mouse will add `density`.
+
+Dragging the mouse will apply `force` towards the moving direction.
+
 ## Building the project
 
 To build the project simply execute `make build` in the directory of the `makefile`.
