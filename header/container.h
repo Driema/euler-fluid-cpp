@@ -2,6 +2,7 @@
 #include<SFML/Graphics.hpp>
 
 #include "./physics.h"
+#include "./const.h"
 
 class Container {
 private:
@@ -13,16 +14,16 @@ private:
 	float diff;
 	float visc;
 	
-	float* px;
-	float* py;
+	float px[SIZE*SIZE];
+	float py[SIZE*SIZE];
 
-	float* x;
-	float* y;
+	float x[SIZE*SIZE];
+	float y[SIZE*SIZE];
 
-	float* previousDensity;
-	float* density;
-
-	void InitArr(float* arr, int size);
+	float previousDensity[SIZE*SIZE];
+	float density[SIZE*SIZE];
+	
+	void InitArr(float arr[], int size);
 public:
 	Container();
 	Container(float dt, float diff, float visc);
