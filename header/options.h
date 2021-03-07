@@ -1,10 +1,12 @@
+#include "./color.h"
+
 class Options {
 private:
-	bool color;
+	Color color;
 public:
-	Options(bool color=false);
+	Options(Color color=Color::Default);
 	~Options();
 	
-	bool GetColor();
-	void SetColor(bool value);
+	Color GetColor();
+	void SetColor(Color c);
 };

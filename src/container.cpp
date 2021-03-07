@@ -81,7 +81,13 @@ sf::Color Container::Hsv(int hue, float sat, float val, float d) {
   	}
 }
 
-void Container::Render(sf::RenderWindow& win, bool color) {
+float Container::MapToRange(float val, float minIn, float maxIn, float minOut, float maxOut) {
+	float x = (val - minIn) / (maxIn - minIn);
+	float result = minOut + (maxOut - minOut) * x;
+	return (result < minOut) ? minOut : (result > maxOut) ? maxOut : result;
+}
+
+void Container::Render(sf::RenderWindow& win, Color color) {
 	win.clear();
 	for (int i = 0; i < this->size; i++) {
 		for(int j = 0; j < this->size; j++) {
@@ -89,11 +95,22 @@ void Container::Render(sf::RenderWindow& win, bool color) {
 			rect.setSize(sf::Vector2f(SCALE, SCALE));
 			rect.setPosition(j * SCALE, i * SCALE);
 			
-			if (color) {
-				rect.setFillColor(this->Hsv((this->density[IX(i,j,this->size)]), 1, 1, 255));
-			} else {
-				rect.setFillColor(sf::Color(255, 255, 255, this->density[IX(i,j,this->size)]));
-			}
+			switch (color) {
+				case Color::Default:
+					rect.setFillColor(sf::Color(255, 255, 255, this->density[IX(i,j,this->size)]));
+					break;
+				case Color::Hsb:
+					rect.setFillColor(this->Hsv((this->density[IX(i,j,this->size)]), 1, 1, 255));
+					break;
+				case Color::Velocity: {
+						int r = (int)this->MapToRange(this->x[IX(i,j,this->size)], -0.05f, 0.05f, 0, 255);
+						int g = (int)this->MapToRange(this->y[IX(i,j,this->size)], -0.05f, 0.05f, 0, 255);
+						rect.setFillColor(sf::Color(r, g, 255));
+						break;
+					}
+				default:
+					break;
+			};	
 
 			win.draw(rect);
 		}

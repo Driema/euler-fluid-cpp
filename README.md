@@ -1,6 +1,8 @@
 Euler fluid simulation
 ===
-![Demo Gif](demo/euler-fluid-simulation-resized.gif)
+![Demo Gif](demo/euler-fluid-simulation-default.gif)
+![Demo Gif](demo/euler-fluid-simulation-hsb.gif)
+![Demo Gif](demo/euler-fluid-simulation-velocity.gif)
 
 ## Inspiration
 
@@ -25,7 +27,7 @@ Pressing left mouse will add `density`.
 Dragging the mouse will apply `force` towards the moving direction.
 
 Keyboard options:
- - `c` = Color Mode
+ - `c` = switch color mode (default, hsb, velocity)
 
 ## Building the project
 

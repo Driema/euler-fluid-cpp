@@ -1,7 +1,6 @@
 #include<vector>
 
 #include "./container.h"
-#include "./options.h"
 
 class Sim {
 private:
