@@ -7,7 +7,7 @@ Physics::Physics() {}
 
 Physics::~Physics() {}
 
-void Physics::SetBnd(int b, float* x, int N) {
+void Physics::SetBnd(int b, float x[], int N) {
         for(int i = 1; i < N - 1; i++) {
             	x[IX(i, 0, N)] = b == 2 ? -x[IX(i, 1, N)] : x[IX(i, 1, N)];
             	x[IX(i, N-1, N)] = b == 2 ? -x[IX(i, N-2, N)] : x[IX(i, N-2, N)];
@@ -32,7 +32,7 @@ void Physics::SetBnd(int b, float* x, int N) {
                                   + x[IX(N-1, N-1, N)]);
 }
 
-void Physics::LinSolve(int b, float* x, float* x0, float a, float c, int iter, int N) {
+void Physics::LinSolve(int b, float x[], float x0[], float a, float c, int iter, int N) {
 	float cRecip = 1.0 / c;
     	for (int k = 0; k < iter; k++) {
         	for (int j = 1; j < N - 1; j++) {
@@ -51,12 +51,12 @@ void Physics::LinSolve(int b, float* x, float* x0, float a, float c, int iter, i
 	}
 }
 
-void Physics::Diffuse(int b, float* x, float* x0, float diff, float dt, int iter, int N) {
+void Physics::Diffuse(int b, float x[], float x0[], float diff, float dt, int iter, int N) {
 	float a = dt * diff * (N - 2) * (N - 2);
 	this->LinSolve(b, x, x0, a, 1 + 6 * a, iter, N);	
 }
 
-void Physics::Project(float* vx, float* vy, float* p, float* div, int iter, int N) {
+void Physics::Project(float vx[], float vy[], float p[], float div[], int iter, int N) {
         for (int j = 1; j < N - 1; j++) {
             	for (int i = 1; i < N - 1; i++) {
                 	div[IX(i, j, N)] = -0.5f*(
@@ -83,7 +83,7 @@ void Physics::Project(float* vx, float* vy, float* p, float* div, int iter, int 
     	this->SetBnd(2, vy, N);
 }
 
-void Physics::Advect(int b, float* d, float* d0, float* vx, float* vy, float dt, int N) {
+void Physics::Advect(int b, float d[], float d0[], float vx[], float vy[], float dt, int N) {
 	float i0, i1, j0, j1;
     
     	float dtx = dt * (N - 2);

@@ -1,9 +1,6 @@
 #include "../header/container.h"
 #include<iostream>
 
-extern const int SIZE;
-extern const int SCALE;
-
 int IX(int x, int y, int N);
 
 Container::Container() : physics(Physics()) {}
@@ -13,36 +10,18 @@ Container::Container(float dt, float diff, float visc) {
 	this->dt = dt;
 	this->diff = diff;
 	this->visc = visc;
-	
-	this->px = new float[SIZE*SIZE];
-	this->py = new float[SIZE*SIZE];
 
-	this->x = new float[SIZE*SIZE];
-	this->y = new float[SIZE*SIZE];
-
-	this->previousDensity = new float[SIZE*SIZE];
-	this->density = new float[SIZE*SIZE];
-
-	this->InitArr(px, SIZE*SIZE);
-	this->InitArr(py, SIZE*SIZE);
-	this->InitArr(x, SIZE*SIZE);
-	this->InitArr(y, SIZE*SIZE);
-	this->InitArr(previousDensity, SIZE*SIZE);
-	this->InitArr(density, SIZE*SIZE);
+	this->InitArr(this->px, SIZE*SIZE);
+	this->InitArr(this->py, SIZE*SIZE);
+	this->InitArr(this->x, SIZE*SIZE);
+	this->InitArr(this->y, SIZE*SIZE);
+	this->InitArr(this->previousDensity, SIZE*SIZE);
+	this->InitArr(this->density, SIZE*SIZE);
 }
 
-Container::~Container() {
-	delete[] this->px;
-	delete[] this->py;
+Container::~Container() {}
 
-	delete[] this->x;
-	delete[] this->y;
-	
-	delete[] this->previousDensity;
-	delete[] this->density;	
-}
-
-void Container::InitArr(float* arr, int size) {
+void Container::InitArr(float arr[], int size) {
 	for (int i = 0; i < size; i++) {
 		arr[i] = 0;	
 	}
@@ -60,29 +39,18 @@ void Container::AddVelocity(float x, float y, float px, float py) {
 }
 
 void Container::Step() {
-	int N = this->size;
-	float visc = this->visc;
-	float diff = this->diff;
-	float dt = this->dt;
-	float* x = this->x;
-	float* y = this->y;
-	float* px = this->px;
-	float* py = this->py;
-	float* previousDensity = this->previousDensity;
-	float* density = this->density;	
+	this->physics.Diffuse(1, this->px, this->x, this->visc, this->dt, 16, this->size);	
+	this->physics.Diffuse(2, this->py, this->y, this->visc, this->dt, 16, this->size);	
 
-	this->physics.Diffuse(1, px, x, visc, dt, 16, N);	
-	this->physics.Diffuse(2, py, y, visc, dt, 16, N);	
-
-	this->physics.Project(px, py, x, y, 16, N);
+	this->physics.Project(this->px, this->py, this->x, this->y, 16, this->size);
 	
-	this->physics.Advect(1, x, px, px, py, dt, N);
-	this->physics.Advect(2, y, py, px, py, dt, N);
+	this->physics.Advect(1, this->x, this->px, this->px, this->py, this->dt, this->size);
+	this->physics.Advect(2, this->y, this->py, this->px, this->py, this->dt, this->size);
 
-	this->physics.Project(x, y, px, py, 16, N);
+	this->physics.Project(this->x, this->y, this->px, this->py, 16, this->size);
 
-	this->physics.Diffuse(0, previousDensity, density, diff, dt, 16, N);	
-	this->physics.Advect(0, density, previousDensity, x, y, dt, N);
+	this->physics.Diffuse(0, this->previousDensity, this->density, this->diff, this->dt, 16, this->size);	
+	this->physics.Advect(0, this->density, this->previousDensity, this->x, this->y, this->dt, this->size);
 }
 
 void Container::Render(sf::RenderWindow& win) {

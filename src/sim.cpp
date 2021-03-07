@@ -1,8 +1,6 @@
 #include "../header/sim.h"
 #include<iostream>
 
-extern const int SIZE = 100;
-extern const int SCALE = 8;
 const int Sim::numParticles = 10;
 
 Sim::Sim() : container(Container(0.2f, 0, 0.0000001f)), win(sf::RenderWindow(sf::VideoMode(SIZE*SCALE, SIZE*SCALE), "Euler fluid simulation - Github: https://github.com/driema/euler-fluid-cpp", sf::Style::Titlebar | sf::Style::Close)) {}
