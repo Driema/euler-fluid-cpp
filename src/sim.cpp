@@ -23,7 +23,11 @@ void Sim::Run() {
 					break;
 				case sf::Event::KeyReleased:
 					if (e.key.code == sf::Keyboard::Key::C) {
-						this->options.SetColor(!this->options.GetColor());	
+						Color c = (this->options.GetColor() == Color::Default) ?
+							Color::Hsb : (this->options.GetColor() == Color::Hsb) ?
+							Color::Velocity : Color::Default;
+
+						this->options.SetColor(c);
 					}
 					break;
 				default:
