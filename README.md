@@ -24,6 +24,9 @@ Pressing left mouse will add `density`.
 
 Dragging the mouse will apply `force` towards the moving direction.
 
+Keyboard options:
+ - `c` = Color Mode
+
 ## Building the project
 
 To build the project simply execute `make build` in the directory of the `makefile`.
