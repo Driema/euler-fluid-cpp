@@ -97,7 +97,7 @@ void Container::Render(sf::RenderWindow& win, Color color) {
 			
 			switch (color) {
 				case Color::Default:
-					rect.setFillColor(sf::Color(255, 255, 255, this->density[IX(i,j,this->size)]));
+					rect.setFillColor(sf::Color(255, 255, 255, (this->density[IX(i,j,this->size)] > 255) ? 255 : this->density[IX(i,j,this->size)]));
 					break;
 				case Color::Hsb:
 					rect.setFillColor(this->Hsv((this->density[IX(i,j,this->size)]), 1, 1, 255));

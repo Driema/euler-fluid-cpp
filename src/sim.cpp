@@ -36,7 +36,7 @@ void Sim::Run() {
 		}
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))			
-			this->container.AddDensity(currentMouse.y/SCALE, currentMouse.x/SCALE, 255);
+			this->container.AddDensity(currentMouse.y/SCALE, currentMouse.x/SCALE, 200);
 
 		currentMouse = sf::Mouse::getPosition(this->win);
 
